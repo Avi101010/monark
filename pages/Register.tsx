@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground, SafeAreaView, KeyboardAvoidingView, Platform, Linking, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from './types';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons , AntDesign} from '@expo/vector-icons';
 export const loginBackground = require('../assets/loginBackground.png');
 
-type LoginProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Login'>;
+type RegisterProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
 };
 
-const Login: React.FC<LoginProps> = ({ navigation }) => {
+const Register: React.FC<RegisterProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
+  const [userName, setuserName] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     // Implement your login logic here
     // On successful login, navigate to the main app screens
-    navigation.navigate('Main');
+    navigation.navigate('Login');
   };
 
   const handleForgetPass = () => {
@@ -28,7 +29,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
   const handleSignUp = () => {
     // Implement your login logic here
     // On successful login, navigate to the main app screens
-    navigation.navigate('Register');
+    navigation.navigate('Login');
   };
 
   return (
@@ -43,7 +44,18 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         style={styles.content}
       >
         <View style={styles.loginDiv} >
-          <Text style={styles.title}>Welcome</Text>
+          <Text style={styles.title}>Create Account</Text>
+
+          <View style={styles.inputSection}>
+          <AntDesign style={styles.inputIcon} name="user" size={25} color="#DDE2EB" />
+            <TextInput
+              style={styles.input}
+              placeholder="Name"
+              onChangeText={setuserName}
+              value={userName}
+              autoCapitalize="none"
+            />
+          </View>
           <View style={styles.inputSection}>
           <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={25} color="#DDE2EB" />
             <TextInput
@@ -68,20 +80,15 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
           />
           </View>
 
-          <Text style={{ color: '#436FE0', textAlign: 'right', marginBottom: 5, marginTop: 7, fontSize: 16 }}
-            onPress={handleForgetPass}>
-            Forgot password?
-          </Text>
-
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Log In</Text>
+          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+            <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
 
           <Text style={{ marginBottom: 30, textAlign: 'center', fontSize: 16 }}>
-            Don't have an account? {' '}
+            Already have an account? {' '}
             <Text style={{ color: '#436FE0' }}
-              onPress={handleSignUp}>
-              Create account
+              onPress={handleLogin}>
+              Log In
             </Text>
           </Text>
 
@@ -160,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;

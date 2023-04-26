@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
-  Login, Home, Watchlist, AssetList, Portfolio, AssetDetails,
+  Login, Register, Home, Watchlist, AssetList, Portfolio, AssetDetails,
   PurchaseSellAssets, Documents, Account
 } from './pages';
 import ThemeProvider from './ThemeContext';
@@ -63,6 +63,7 @@ const RootStack = () => {
       <SafeAreaProvider>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
           <Stack.Screen name="AssetDetails" component={AssetDetails} />
           <Stack.Screen name="PurchaseSellAssets" component={PurchaseSellAssets} />
