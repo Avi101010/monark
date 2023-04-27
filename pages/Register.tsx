@@ -17,6 +17,9 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [userName, setuserName] = useState('');
   const [password, setPassword] = useState('');
+  const [isNameFocused, setIsNameFocused] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+
 
   const [isLoaded] = useFonts({
     "poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -31,6 +34,22 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
       await SplashScreen.hideAsync(); //hide the splashscreen
     }
   }, [isLoaded]);
+
+  const handleNameFocus = () => {
+    setIsNameFocused(true);
+  };
+
+  const handleNameBlur = () => {
+    setIsNameFocused(false);
+  };
+
+  const handleEmailFocus = () => {
+    setIsEmailFocused(true);
+  };
+
+  const handleEmailBlur = () => {
+    setIsEmailFocused(false);
+  };
 
   const handleLogin = () => {
     // Implement your login logic here
@@ -59,7 +78,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
       source={require('../assets/registerBackground.png')}
     >
       {/* <Image source={require('../assets/logo.png')} style={{ position: "absolute", top: 70, left: 20, }} /> */}
-            <Text style={{ position: "absolute", top: 74, left: 27, fontSize: 36, color: '#0A1C4B', fontFamily: 'Poppins-Medium', fontWeight: '600' }}>
+      <Text style={{ position: "absolute", top: 74, left: 27, fontSize: 36, color: '#0A1C4B', fontFamily: 'Poppins-Medium', fontWeight: '600' }}>
         monark
       </Text>
 
@@ -71,8 +90,15 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
           <Text style={styles.title}>Create Account</Text>
 
           <View style={styles.inputSection}>
-            <AntDesign style={styles.inputIcon} name="user" size={25} color="#DDE2EB" />
+            {
+              isNameFocused ? (
+                <AntDesign style={styles.inputIcon} name="user" size={25} color="#3A83FF" />
+              ) : <AntDesign style={styles.inputIcon} name="user" size={25} color="#DDE2EB" />
+            }
+
             <TextInput
+              onFocus={handleNameFocus}
+              onBlur={handleNameBlur}
               style={styles.input}
               placeholder="Name"
               onChangeText={setuserName}
@@ -81,8 +107,15 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
             />
           </View>
           <View style={styles.inputSection}>
-            <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={22} color="#DDE2EB" />
+          {
+              isEmailFocused ? (
+                <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={22} color="#3A83FF" />
+              ) : <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={22} color="#DDE2EB" />
+            }
+            
             <TextInput
+              onFocus={handleEmailFocus}
+              onBlur={handleEmailBlur}
               style={styles.input}
               placeholder="Email"
               keyboardType="email-address"
@@ -96,7 +129,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
             {/* <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={25} color="#DDE2EB" /> */}
             <Image
               source={require('../assets/icons/lock-icon.png')}
-              style={{marginLeft: 20}}
+              style={{ marginLeft: 20 }}
             />
             <TextInput
               style={styles.input}
