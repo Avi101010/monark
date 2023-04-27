@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState ,useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground, SafeAreaView, KeyboardAvoidingView, Platform, Linking, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from './types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-export const loginBackground = require('../assets/loginBackground.png');
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+// export const loginBackground = require('../assets/loginBackground.png');
+
+SplashScreen.preventAutoHideAsync();
 
 type LoginProps = {
   navigation: StackNavigationProp<RootStackParamList, 'Login'>;
@@ -12,6 +17,19 @@ type LoginProps = {
 const Login: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [isLoaded] = useFonts({
+    "poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
+    "poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
+    "poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
+    "poppins-Italic": require("../assets/fonts/Poppins-Italic.ttf"),
+  });
+
+  const handleOnLayout = useCallback(async () => {
+    if (isLoaded) {
+      await SplashScreen.hideAsync(); //hide the splashscreen
+    }
+  }, [isLoaded]);
 
   const handleLogin = () => {
     // Implement your login logic here
@@ -31,10 +49,13 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
     navigation.navigate('Register');
   };
 
+  if (!isLoaded) {
+    return null;
+  }
   return (
     <ImageBackground
       style={styles.backgroundImage}
-      source={loginBackground}
+      source={require('../assets/loginBackground.png')}
     >
       <Image source={require('../assets/logo.png')} style={{ position: "absolute", top: 70, left: 20, }} />
 
@@ -42,7 +63,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.content}
       >
-        <View style={styles.loginDiv} >
+        <View style={styles.loginDiv} onLayout={handleOnLayout}>
           <Text style={styles.title}>Welcome</Text>
           <View style={styles.inputSection}>
           <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={25} color="#DDE2EB" />
@@ -102,7 +123,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     marginBottom: 25,
     color: '#0A1C4B',
-    fontWeight: '500'
+    fontWeight: '500',
+    fontFamily: 'poppins-Bold'
   },
   input: {
     width: '100%',
@@ -113,6 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     fontSize: 18,
+    fontFamily: 'poppins-Regular'
   },
   button: {
     backgroundColor: '#436FE0',
@@ -153,7 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderColor: '#DDE2EB',
-    marginBottom: 20
+    marginBottom: 20,
   },
   inputIcon: {
     paddingLeft: 20
