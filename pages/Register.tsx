@@ -85,10 +85,10 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     return null;
   }
   return (
-    <View style={{ flex:1 , justifyContent: 'center', alignItems: 'center' }}>
+
     <ImageBackground
       style={styles.backgroundImage}
-      source={require('../assets/image-74bg.png')}
+      source={require('../assets/registerBackground.png')}
     >
       {/* <Image source={require('../assets/logo.png')} style={{ position: "absolute", top: 70, left: 20, }} /> */}
       <Text style={{ position: "absolute", top: 74, left: 27, fontSize: 36, color: '#0A1C4B', fontFamily: 'Poppins-Medium', fontWeight: '600' }}>
@@ -145,7 +145,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={22} color="#3A83FF" />
               ) : <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={22} color="#DDE2EB" />
             }
-            
+
             {/* {
               isRegPasswordFocused ? (
                 <Image
@@ -169,22 +169,25 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
             />
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+          <TouchableOpacity style={styles.button} onPress={handleSignUp} activeOpacity={0.9}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
 
-          <Text style={{ marginBottom: 30, textAlign: 'center', fontSize: 16, fontFamily: 'poppins-Regular' }}>
-            Already have an account? {' '}
-            <Text style={{ color: '#436FE0', fontFamily: 'poppins-Regular' }}
-              onPress={handleLogin}>
-              Log In
-            </Text>
-          </Text>
-        </View>
+          <View style={{marginBottom: 20, flexDirection: 'row', justifyContent: 'center', }}>
+            <Text style={{ fontSize: 16, fontFamily: 'poppins-Regular', textAlign: 'center' }}>Already have an account? {' '}</Text>
+            <TouchableOpacity
+              onPress={handleLogin}
+              activeOpacity={0.7}
+            >
+              <Text style={{ fontSize: 16, color: '#436FE0', fontFamily: 'poppins-Regular' }}>
+                Log In
+              </Text>
+            </TouchableOpacity>
+          </View>
 
+        </View>
       </KeyboardAvoidingView>
     </ImageBackground>
-    </View>
   );
 };
 

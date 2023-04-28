@@ -111,7 +111,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
                 <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={22} color="#3A83FF" />
               ) : <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={22} color="#DDE2EB" />
             }
-            
+
             {/* {
               isPasswordFocused ? (
                 <Image
@@ -135,26 +135,30 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
             />
           </View>
 
-          <Text style={{ color: '#436FE0', textAlign: 'right', marginBottom: 5, marginTop: 7, fontSize: 16, fontFamily: 'poppins-Regular' }}
-            onPress={handleForgetPass}>
-            Forgot password?
-          </Text>
+          <TouchableOpacity onPress={handleForgetPass} activeOpacity={0.7}>
+            <Text style={{ color: '#436FE0', textAlign: 'right', marginBottom: 5, marginTop: 7, fontSize: 16, fontFamily: 'poppins-Regular' }}
+            >
+              Forgot password?
+            </Text>
+          </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+
+          <TouchableOpacity style={styles.button} activeOpacity={0.9} onPress={handleLogin}>
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableOpacity>
 
-          <Text style={{ marginBottom: 30, textAlign: 'center', fontSize: 16, fontFamily: 'poppins-Regular' }}>
-            Don't have an account? {' '}
-            <TouchableOpacity 
-            onPress={handleSignUp}
-            activeOpacity={0.7}
+          <View style={{marginBottom: 20, flexDirection:'row', justifyContent: 'center',}}>
+            <Text style={{ fontSize: 16, fontFamily: 'poppins-Regular', textAlign:'center' }}>Don't have an account? {' '}</Text>
+            <TouchableOpacity
+              onPress={handleSignUp}
+              activeOpacity={0.7}
             >
-            <Text style={{ fontSize: 16, color: '#436FE0', fontFamily: 'poppins-Regular' }}>
-              Create account
-            </Text>
+              <Text style={{ fontSize: 16, color: '#436FE0', fontFamily: 'poppins-Regular'}}>
+                Create account
+              </Text>
             </TouchableOpacity>
-          </Text>
+          </View>
+
 
         </View>
 
