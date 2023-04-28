@@ -17,7 +17,8 @@ type LoginProps = {
 const Login: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const [isLoaded] = useFonts({
     "poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -26,12 +27,20 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
     "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
   });
 
-  const handleFocus = () => {
-    setIsFocused(true);
+  const handleEmailFocus = () => {
+    setIsEmailFocused(true);
   };
 
-  const handleBlur = () => {
-    setIsFocused(false);
+  const handleEmailBlur = () => {
+    setIsEmailFocused(false);
+  };
+
+  const handlePasswordFocus = () => {
+    setIsPasswordFocused(true);
+  };
+
+  const handlePasswordBlur = () => {
+    setIsPasswordFocused(false);
   };
 
   const handleOnLayout = useCallback(async () => {
@@ -79,13 +88,13 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
           <Text style={styles.title}>Welcome</Text>
           <View style={styles.inputSection}>
             {
-              isFocused ? (
+              isEmailFocused ? (
                 <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={22} color="#3A83FF" />
               ) : <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={22} color="#DDE2EB" />
             }
             <TextInput
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={handleEmailFocus}
+              onBlur={handleEmailBlur}
               style={styles.input}
               placeholder="Email"
               keyboardType="email-address"
@@ -97,11 +106,26 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
 
           <View style={styles.inputSection}>
             {/* <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={25} color="#DDE2EB" /> */}
-            <Image
-              source={require('../assets/icons/lock-icon.png')}
-              style={{marginLeft: 20}}
-            />
+            {
+              isPasswordFocused ? (
+                <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={22} color="#3A83FF" />
+              ) : <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={22} color="#DDE2EB" />
+            }
+            
+            {/* {
+              isPasswordFocused ? (
+                <Image
+                  source={require('../assets/icons/lock-icon-focus.png')}
+                  style={{ marginLeft: 20,}}
+                />
+              ) : <Image
+                source={require('../assets/icons/lock-icon.png')}
+                style={{ marginLeft: 20 }}
+              />
+            } */}
             <TextInput
+              onFocus={handlePasswordFocus}
+              onBlur={handlePasswordBlur}
               style={styles.input}
               placeholder="Password"
               secureTextEntry
@@ -122,10 +146,14 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
 
           <Text style={{ marginBottom: 30, textAlign: 'center', fontSize: 16, fontFamily: 'poppins-Regular' }}>
             Don't have an account? {' '}
-            <Text style={{ color: '#436FE0', fontFamily: 'poppins-Regular' }}
-              onPress={handleSignUp}>
+            <TouchableOpacity 
+            onPress={handleSignUp}
+            activeOpacity={0.7}
+            >
+            <Text style={{ fontSize: 16, color: '#436FE0', fontFamily: 'poppins-Regular' }}>
               Create account
             </Text>
+            </TouchableOpacity>
           </Text>
 
         </View>

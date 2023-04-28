@@ -19,6 +19,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [isNameFocused, setIsNameFocused] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isRegPasswordFocused, setIsRegPasswordFocused] = useState(false);
 
 
   const [isLoaded] = useFonts({
@@ -27,6 +28,8 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     "poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
     "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
   });
+
+
 
 
   const handleOnLayout = useCallback(async () => {
@@ -51,6 +54,15 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     setIsEmailFocused(false);
   };
 
+  const handlePasswordFocus = () => {
+    setIsRegPasswordFocused(true);
+  };
+
+  const handlePasswordBlur = () => {
+    setIsRegPasswordFocused(false);
+  };
+
+
   const handleLogin = () => {
     // Implement your login logic here
     // On successful login, navigate to the main app screens
@@ -73,9 +85,10 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     return null;
   }
   return (
+    <View style={{ flex:1 , justifyContent: 'center', alignItems: 'center' }}>
     <ImageBackground
       style={styles.backgroundImage}
-      source={require('../assets/registerBackground.png')}
+      source={require('../assets/image-74bg.png')}
     >
       {/* <Image source={require('../assets/logo.png')} style={{ position: "absolute", top: 70, left: 20, }} /> */}
       <Text style={{ position: "absolute", top: 74, left: 27, fontSize: 36, color: '#0A1C4B', fontFamily: 'Poppins-Medium', fontWeight: '600' }}>
@@ -107,12 +120,12 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
             />
           </View>
           <View style={styles.inputSection}>
-          {
+            {
               isEmailFocused ? (
                 <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={22} color="#3A83FF" />
               ) : <MaterialCommunityIcons style={styles.inputIcon} name="email-outline" size={22} color="#DDE2EB" />
             }
-            
+
             <TextInput
               onFocus={handleEmailFocus}
               onBlur={handleEmailBlur}
@@ -127,11 +140,26 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
 
           <View style={styles.inputSection}>
             {/* <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={25} color="#DDE2EB" /> */}
-            <Image
-              source={require('../assets/icons/lock-icon.png')}
-              style={{ marginLeft: 20 }}
-            />
+            {
+              isRegPasswordFocused ? (
+                <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={22} color="#3A83FF" />
+              ) : <MaterialCommunityIcons style={styles.inputIcon} name="lock-outline" size={22} color="#DDE2EB" />
+            }
+            
+            {/* {
+              isRegPasswordFocused ? (
+                <Image
+                  source={require('../assets/icons/lock-icon-focus.png')}
+                  style={{ marginLeft: 20, }}
+                />
+              ) : <Image
+                source={require('../assets/icons/lock-icon.png')}
+                style={{ marginLeft: 20 }}
+              />
+            } */}
             <TextInput
+              onFocus={handlePasswordFocus}
+              onBlur={handlePasswordBlur}
               style={styles.input}
               placeholder="Password"
               secureTextEntry
@@ -156,6 +184,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
 
       </KeyboardAvoidingView>
     </ImageBackground>
+    </View>
   );
 };
 
